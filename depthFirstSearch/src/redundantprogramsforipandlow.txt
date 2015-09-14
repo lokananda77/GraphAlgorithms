@@ -1,0 +1,50 @@
+#            while(adjedges[i] != '\n'):         
+#                if i%2 == 0:
+#                    if i == 0:
+#                        xe = adjacencyListNode(int(adjedges[i]))
+#                        self.adjList[int(adjedges[i])] = xe 
+#                    else:
+#                        xe = adjacencyListNode(int(adjedges[i]))
+#                        temp = self.adjList[head]
+#                        while temp.nextnode is not None:
+#                            temp = temp.nextnode
+#                        temp.nextnode = xe
+#                        
+#                i = i+1
+
+
+
+
+
+
+#    for l in leaves:
+#        h.append(dfsearcher.parent[l]) 
+#    for l in h:
+#        temp=[]
+#        for i in range(1,dfsearcher.n+1):
+#            if (dfsearcher.parent[i] == l):
+#                temp.append(dfsearcher.low[i])
+#        for be in dfsearcher.backedges:
+#            if be[0] == l:
+#                temp.append(dfsearcher.d[be[1]]) 
+#        temp.append(dfsearcher.d[l])    
+#        dfsearcher.low[l] = min(temp)     
+#    print "low"
+#    print dfsearcher.low
+#    
+#    for l in h:
+#        if dfsearcher.parent[l] is not None:
+#            g.append(dfsearcher.parent[l]) 
+#    
+#    for l in g:
+#        temp=[]
+#        for i in range(1,dfsearcher.n+1):
+#            if (dfsearcher.parent[i] == l):
+#                temp.append(dfsearcher.low[i])
+#        for be in dfsearcher.backedges:
+#            if be[0] == l:
+#                temp.append(dfsearcher.d[be[1]]) 
+#        temp.append(dfsearcher.d[l])    
+#        dfsearcher.low[l] = min(temp)     
+#    print "low"
+#    print dfsearcher.low

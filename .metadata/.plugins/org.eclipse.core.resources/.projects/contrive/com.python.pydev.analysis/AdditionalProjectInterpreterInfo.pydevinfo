@@ -1,0 +1,42 @@
+-- VERSION_4
+-- START DISKCACHE_2
+C:\Users\Lokananda\GraphAlgorithms\.metadata\.plugins\org.eclipse.core.resources\.projects\contrive\com.python.pydev.analysis\v2_indexcache
+get_score|1319914404087000000|C:\Users\Lokananda\GraphAlgorithms\contrive\src\get_score.py
+hamiltonian|1319945793925000000|C:\Users\Lokananda\GraphAlgorithms\contrive\src\hamiltonian.py
+generate_players|1319821236442000000|C:\Users\Lokananda\GraphAlgorithms\contrive\src\generate_players.py
+match|1319826039303000000|C:\Users\Lokananda\GraphAlgorithms\contrive\src\match.py
+-- END DISKCACHE
+-- START DICTIONARY
+6
+1=get_score
+6=Hamiltonian.__init__
+2=hamiltonian
+5=Hamiltonian
+4=generate_players
+3=match
+-- END DICTIONARY
+-- START TREE 1
+13
+com|1|compare!10@
+cor|1|correlation!10@
+cou|1|count!19@
+fil|1|fillgraph!18@
+fla|1|flag!19@
+get|1|get_abs_rank!10@
+ham|1|Hamiltonian!17@
+mai|3|main!10@main!26@main!34@
+mat|2|match!18@match!10@
+ran|1|rank!11@
+sco|1|score!11@
+toi|3|toInt!10@toInt!34@toInt!26@
+usa|2|usage!34@usage!26@
+-- END TREE
+-- START TREE 2
+6
+__i|1|__init__!5&18@
+hp|1|hp!5&18@
+i|1|i!5&19@
+n|2|n!5&19@n!6&19@
+pat|2|pathSoFar!6&19@path!5&19@
+pri|1|printSolution!5&18@
+-- END TREE

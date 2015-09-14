@@ -1,0 +1,88 @@
+-- VERSION_4
+-- START DISKCACHE_2
+C:\Users\Lokananda\GraphAlgorithms\.metadata\.plugins\org.eclipse.core.resources\.projects\depthFirstSearch\com.python.pydev.analysis\v2_indexcache
+spamdetector|1311785184395000000|C:\Users\Lokananda\GraphAlgorithms\depthFirstSearch\src\spamdetector.py
+dfs|1330841580076000000|C:\Users\Lokananda\GraphAlgorithms\depthFirstSearch\src\dfs.py
+-- END DISKCACHE
+-- START DICTIONARY
+20
+10=depthfirstsearch
+1=spamdetector
+2=dfs
+20=message.__init__
+14=Promail.check_for_new_mail
+12=TaskThread.__init__
+17=depthfirstsearch.dfs_visit
+4=depthfirstsearch.__init__
+6=message
+9=TaskThread
+16=adjacencyList.createAdjList
+15=Promail.incoming_update
+11=adjacencyList.__init__
+8=adjacencyList
+3=Promail.__init__
+7=adjacencyListNode
+13=adjacencyListNode.__init__
+19=Promail.periodic_update
+18=depthfirstsearch.dfs
+5=Promail
+-- END DICTIONARY
+-- START TREE 1
+6
+adj|4|adjacencyListNode!9@adjacencyListNode!17@adjacencyList!17@adjacencyList!9@
+dep|1|depthfirstsearch!17@
+ipf|2|ipfile!19@ipfile!11@
+mes|1|message!9@
+pro|1|Promail!9@
+tas|1|TaskThread!9@
+-- END TREE
+-- START TREE 2
+47
+G|2|G!3&11@G!4&19@
+__i|8|__init__!5&10@__init__!6&10@__init__!7&10@__init__!8&10@__init__!9&10@__init__!10&18@__init__!7&18@__init__!8&18@
+__s|2|__str__!8&10@__str__!8&18@
+adj|2|adjList!11&11@adjList!11&19@
+all|1|all_children_not_known!10&19@
+app|2|append_dfs_tree_node!10&18@appendEdgeToAdjList!8&10@
+arg|1|args!12&11@
+bac|1|backedges!4&19@
+bri|1|bridges!10&19@
+che|1|check_for_new_mail!5&10@
+col|1|color!4&19@
+cre|2|createAdjList!8&10@createAdjList!8&18@
+d|1|d!4&19@
+dec|1|decayscore!13&11@
+deg|1|degree!11&19@
+del|2|delG!5&10@delfromadjlist!5&10@
+dfs|4|dfs_visit!10&18@dfs_G!4&19@dfsearcher!10&19@dfs!10&18@
+f|1|f!4&19@
+fin|2|finished!12&11@find_spam_thresh!5&10@
+fun|1|function!12&11@
+ham|1|hams!3&11@
+inc|1|incoming_update!5&10@
+int|1|interval!12&11@
+lea|1|leaves!10&19@
+low|1|low!4&19@
+mar|1|markednodes!11&11@
+n|4|n!3&11@n!11&11@n!4&19@n!11&19@
+new|6|new_mail_time!14&11@new_mail_time!15&11@new_mail_time!3&11@new_mail_recievers!3&11@new_mail_sender!14&11@new_mail_sender!3&11@
+nex|3|nextnode!13&11@nextround_markednodes!11&11@nextnode!13&19@
+no_|2|no_m_nodes!16&11@no_m_nodes!11&11@
+nod|2|node!13&11@nodescores!11&11@
+out|1|outlinkdegree!11&11@
+p|1|p!10&19@
+par|1|parent!4&19@
+per|1|periodic_update!5&10@
+pu|1|pu!3&11@
+ran|1|RankMail!5&10@
+run|1|run!9&10@
+sco|1|score!13&11@
+shu|1|shutdown!9&10@
+spa|2|spam_thresh!3&11@spams!3&11@
+tem|1|temp!10&19@
+ti|1|ti!3&11@
+tim|5|time!17&19@time!18&19@time!19&11@time!20&11@time!13&11@
+tm|1|tm!3&11@
+v|1|v!10&19@
+ver|1|vertex!13&19@
+-- END TREE

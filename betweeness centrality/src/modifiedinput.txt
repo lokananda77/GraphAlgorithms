@@ -1,0 +1,24 @@
+def createAdjList(self):
+        for j in range (0,self.n):
+            #head = input("enter the head node")
+            #plan to take the input  inseveral forms one such is this
+            adjedges = ipfile.readline()
+            
+            head=int(adjedges[0])
+            i = 0
+	    countnegedg = 0            
+            while(adjedges[i] != '\n'):
+                i = i+1
+                if (i - 3 -countnegedg) % 6 == 0:
+		    if adjedges[i+2] != '-':
+                    	xe = adjacencyListNode(adjedges[i],adjedges[i+2])
+		    else:
+			countnegedg = countnegedg + 1 
+			xe = adjacencyListNode(adjedges[i],-1*adjedges[i+3])
+                    if self.adjList[head] is None:
+                        self.adjList[head] = xe
+                    else:                            
+                        temp = self.adjList[head]
+                        while temp.nextnode is not None:
+                            temp = temp.nextnode
+                        temp.nextnode = xe

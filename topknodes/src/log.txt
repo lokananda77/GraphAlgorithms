@@ -1,0 +1,87 @@
+0-->1
+1-->0-->2-->4
+2-->3-->1
+3-->4-->5-->2
+4-->1-->3
+5-->6-->8-->9-->7-->11-->3
+6-->7-->5
+7-->6-->5
+8-->5-->9-->10
+9-->8-->5
+10-->8
+11-->5-->12-->14
+12-->11-->13
+13-->12-->14-->15
+14-->11-->13
+15-->13-->16-->17
+16-->15-->17-->20-->21
+17-->15-->16-->18-->19
+18-->17-->16-->19
+19-->17-->18
+20-->16-->22-->23
+21-->16
+22-->20-->23
+23-->22-->20
+
+0.5
+determining 0th seed
+these 0 nodes will not affect score of seed []
+[]
+these 0 nodes will not affect score of seed []
+[]
+these 0 nodes will not affect score of seed []
+[]
+these 0 nodes will not affect score of seed []
+[]
+these 0 nodes will not affect score of seed []
+[]
+[1.8, 4.0, 1.6000000000000001, 3.0, 3.7999999999999998, 5.0, 1.3999999999999999, 3.2000000000000002, 1.2, 1.6000000000000001, 0.20000000000000001, 3.2000000000000002, 5.0, 5.4000000000000004, 4.0, 5.5999999999999996, 4.5999999999999996, 3.7999999999999998, 5.4000000000000004, 4.5999999999999996, 3.6000000000000001, 3.2000000000000002, 0.80000000000000004, 1.6000000000000001]
+5.6
+appended 15 as seed
+determining 1th seed
+these 7 nodes will not affect score of seed [<__main__.adjacencyListNode object at 0x02278610>]
+[16, 17, 18, 19, 20, 21, 23]
+these 1 nodes will not affect score of seed [<__main__.adjacencyListNode object at 0x02278610>]
+[16]
+these 4 nodes will not affect score of seed [<__main__.adjacencyListNode object at 0x02278610>]
+[16, 17, 20, 13]
+these 0 nodes will not affect score of seed [<__main__.adjacencyListNode object at 0x02278610>]
+[]
+these 7 nodes will not affect score of seed [<__main__.adjacencyListNode object at 0x02278610>]
+[16, 17, 18, 19, 20, 21, 22]
+[2.2000000000000002, 3.2000000000000002, 2.7999999999999998, 5.2000000000000002, 2.7999999999999998, 5.4000000000000004, 5.0, 5.0, 4.0, 4.0, 0.20000000000000001, 4.7999999999999998, 5.7999999999999998, 5.4000000000000004, 6.7999999999999998, 3.7999999999999998, 0.80000000000000004, 0.40000000000000002, 1.0, 1.0, 0.40000000000000002, 0.59999999999999998, 1.3999999999999999, 1.0]
+6.8
+appended 14 as seed
+determining 2th seed
+these 5 nodes will not affect score of seed [<__main__.adjacencyListNode object at 0x02278610>, <__main__.adjacencyListNode object at 0x02278670>]
+[17, 11, 13, 14, 15]
+these 12 nodes will not affect score of seed [<__main__.adjacencyListNode object at 0x02278610>, <__main__.adjacencyListNode object at 0x02278670>]
+[3, 5, 6, 7, 8, 9, 10, 11, 16, 17, 18, 19]
+these 13 nodes will not affect score of seed [<__main__.adjacencyListNode object at 0x02278610>, <__main__.adjacencyListNode object at 0x02278670>]
+[0, 1, 2, 3, 4, 5, 6, 7, 11, 13, 16, 17, 21]
+these 9 nodes will not affect score of seed [<__main__.adjacencyListNode object at 0x02278610>, <__main__.adjacencyListNode object at 0x02278670>]
+[3, 4, 5, 11, 12, 16, 17, 19, 21]
+these 2 nodes will not affect score of seed [<__main__.adjacencyListNode object at 0x02278610>, <__main__.adjacencyListNode object at 0x02278670>]
+[17, 13]
+[2.2000000000000002, 2.3999999999999999, 1.8, 2.0, 2.0, 3.2000000000000002, 1.6000000000000001, 3.2000000000000002, 6.0, 4.2000000000000002, 4.5999999999999996, 2.0, 7.0, 5.0, 4.4000000000000004, 2.7999999999999998, 1.6000000000000001, 0.0, 3.7999999999999998, 3.0, 3.6000000000000001, 0.80000000000000004, 2.0, 2.2000000000000002]
+7.0
+appended 12 as seed
+determining 3th seed
+these 14 nodes will not affect score of seed [<__main__.adjacencyListNode object at 0x02278610>, <__main__.adjacencyListNode object at 0x02278670>, <__main__.adjacencyListNode object at 0x02278510>]
+[2, 3, 5, 8, 10, 11, 13, 14, 15, 16, 20, 21, 22, 23]
+these 12 nodes will not affect score of seed [<__main__.adjacencyListNode object at 0x02278610>, <__main__.adjacencyListNode object at 0x02278670>, <__main__.adjacencyListNode object at 0x02278510>]
+[5, 8, 9, 10, 11, 13, 14, 15, 16, 17, 20, 22]
+these 5 nodes will not affect score of seed [<__main__.adjacencyListNode object at 0x02278610>, <__main__.adjacencyListNode object at 0x02278670>, <__main__.adjacencyListNode object at 0x02278510>]
+[16, 11, 12, 13, 14]
+these 15 nodes will not affect score of seed [<__main__.adjacencyListNode object at 0x02278610>, <__main__.adjacencyListNode object at 0x02278670>, <__main__.adjacencyListNode object at 0x02278510>]
+[5, 6, 7, 8, 9, 11, 12, 13, 15, 16, 17, 18, 19, 20, 21]
+these 4 nodes will not affect score of seed [<__main__.adjacencyListNode object at 0x02278610>, <__main__.adjacencyListNode object at 0x02278670>, <__main__.adjacencyListNode object at 0x02278510>]
+[11, 12, 13, 14]
+[1.3999999999999999, 2.0, 1.6000000000000001, 2.2000000000000002, 1.0, 2.6000000000000001, 5.4000000000000004, 0.20000000000000001, 3.0, 0.59999999999999998, 2.2000000000000002, 0.0, 5.2000000000000002, 0.0, 3.0, 0.40000000000000002, 1.3999999999999999, 4.0, 5.2000000000000002, 4.2000000000000002, 1.0, 1.2, 1.2, 0.59999999999999998]
+5.4
+appended 6 as seed
+results
+15
+14
+12
+6

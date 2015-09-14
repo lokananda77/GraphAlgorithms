@@ -1,0 +1,99 @@
+#    def printheap(self,prevparent = None,z):
+#        if z.child is None or z.child is (u for u in self.childs):
+#            if z.parent is not prevparent:
+#                s = z     
+#            while s is not z.left:
+#                if s.parent is not prevparent:
+#                    strl ="\n parent(%d)(cost =%d)--->" %(s.parent.vertex,s.parent.cost)
+#                else:
+#                    strl = strl + "(%d)(cost =%d)--->)" %(s.vertex,s.cost)
+#                    s = s.right
+#                    self.printheap(s)
+#            strl=strl+"(%d)(cost =%d)"%(s.vertex,s.cost)
+#            prevparent = s.parent
+#            self.childs.append(z.child)
+#            return
+#        else:
+#            self.printheap(prevparent=z,z.child)
+#            return
+    
+#        
+#    
+#        return strl
+
+#if __name__ == '__main__':
+#    H = fiboheap()
+##    for i in range (0,10,2):
+##        H.fiboHeapInsert(i)
+#    
+##    H.fiboHeapInsert(18,0)
+##    H.fiboHeapInsert(2,0)
+##    H.fiboHeapInsert(6,0)
+##    H.fiboHeapInsert(13,0)
+##    H.fiboHeapInsert(11,0)
+##    H.fiboHeapInsert(7,0)
+##    H.fiboHeapInsert(8,0)
+##    H.fiboHeapInsert(10,0)
+##    H.fiboHeapInsert(3,0)
+##    H.fiboHeapInsert(12,0)
+##    H.fiboHeapInsert(4,0)
+##    H.fiboHeapInsert(17,0)
+##    H.fiboHeapInsert(16,0)
+##    H.fiboHeapInsert(5,0)
+##    H.fiboHeapInsert(20,0)
+##    H.fiboHeapInsert(30,0)
+##    H.fiboHeapInsert(110,0)
+##    H.fiboHeapInsert(70,0)
+##    H.fiboHeapInsert(81,0)
+##    H.fiboHeapInsert(111,0)
+##    H.fiboHeapInsert(31,0)
+##    H.fiboHeapInsert(120,0)
+##    H.fiboHeapInsert(40,0)
+##    H.fiboHeapInsert(107,0)
+##    H.fiboHeapInsert(160,0)
+##    H.fiboHeapInsert(50,0)
+##    H.fiboHeapInsert(200,0)
+##    H.fiboHeapInsert(300,0)
+#    
+#    print H
+#    z = 1
+#    y = 1
+#    
+#    z = H.fiboHeapExtractMin()
+#        #print "end of round of extractmin"
+##        try:
+##            #print H
+##        except:
+##            print "exception"
+#        #print "z.cost"
+#    print "%d = %d" % (y,z.cost)
+#    t=z.right
+#    print "%d = %d" % (y,t.cost)
+#    
+#    
+#        
+#    H.fiboHeapDecreaseKey(t, 1)
+#    print H
+#    while z is not None:
+#        z = H.fiboHeapExtractMin()
+#        #print "fibo heap:"+str(H)
+#    #print "end of round of extractmin"
+##        try:
+##            #print H
+##        except:
+##            print "exception"
+#    #print "z.key"
+#        print z.cost
+#        
+##def fiboHeapUnion(H1,H2):
+##        H = fiboheap()
+##        H.min = min[H1]
+##        Concatenate the root list of H2 with the root list of H
+##        if (min[H1] = NIL) or (min[H2] is not None NIL and min[H2] < min[H1])
+##            min[H] := min[H2]
+##        n[H] = n[H1] + n[H2]
+##        free the objects H1 and H2
+##        return H       
+#            
+#                    
+#   

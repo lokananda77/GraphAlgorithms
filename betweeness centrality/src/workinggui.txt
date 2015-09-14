@@ -1,0 +1,429 @@
+import cv
+import wx
+import thicknessandroot
+import dandruff_detection
+from blockwindow import BlockWindow
+import camfunc
+import scalpXmlDomEditor
+class Notebook(wx.Frame):
+    
+    def scale_bitmap(self,bitmap, width, height):
+        image = wx.ImageFromBitmap(bitmap)
+        image = image.Scale(width, height, wx.IMAGE_QUALITY_HIGH)
+        result = wx.BitmapFromImage(image)
+        return result
+    
+    def OnOpenMe(self, event):
+        fd = wx.FileDialog(self,"Open Scalp Sample","./images","*.bmp","BMP files(*.bmp)|*.bmp", wx.OPEN)
+        
+        self.bw1.Destroy()
+        if fd.ShowModal() == wx.ID_OK:
+            file = fd.GetPath()
+            img = wx.Image(file,wx.BITMAP_TYPE_BMP).ConvertToBitmap()
+            img = self.scale_bitmap(img, 450, 300)
+            specimenpic = wx.StaticBitmap(self, -1, img,wx.Point(0,0),wx.Size(img.GetWidth(),img.GetHeight()))
+            self.imagesdisp_sizer.Add(specimenpic)
+            self.Layout()
+            self.Refresh(True)
+            self.filename=file
+            
+    def thick_estimate(self, event):
+        
+        frame,self.nb_thickness_in_mm=thicknessandroot.determine_thickness(self.filename,3)
+        
+        wxImage = wx.EmptyImage(frame.width, frame.height)
+        wxImage.SetData(frame.tostring())
+        img = wx.BitmapFromImage(wxImage)
+        img = self.scale_bitmap(img, 450, 300)  
+        sb1 = wx.StaticBitmap(self, -1,img, (455,25),(450, 300))
+        #self.rfgs.Add(wx.StaticText(self, label=thickness_in_mm+" mm",pos=(100,400)),0, wx.ALIGN_CENTER_VERTICAL)
+        wx.MessageBox("The thickness is found to be = "+self.nb_thickness_in_mm+" mm",style=wx.CENTER|wx.OK)
+        self.Layout()
+        self.Refresh(True)
+    
+    def density_estimate(self, event):
+        
+        frame,index=thicknessandroot.find_hairroots(3,self.filename)
+        wxImage = wx.EmptyImage(frame.width, frame.height)
+        wxImage.SetData(frame.tostring())
+        img = wx.BitmapFromImage(wxImage)
+        img = self.scale_bitmap(img, 450, 300)  
+        sb1 = wx.StaticBitmap(self, -1,img, (455,25),(450, 300))
+        self.nb_rootdensity = str(index)
+        
+        #self.rfgs.Add(wx.StaticText(self, label=str(index),pos=(100,420)),0, wx.ALIGN_CENTER_VERTICAL)
+        
+        wx.MessageBox("The average root density is %d" % (index),style=wx.CENTER|wx.OK)
+        self.Layout()
+        self.Refresh(True)
+    def dandruff_estimate(self, event):
+        
+        frame,index=dandruff_detection.detect_dandruff(self.filename,"dandrufftemp9.bmp")
+#        cv.ShowImage("fl",frame)
+        wxImage = wx.EmptyImage(frame.width, frame.height)
+        wxImage.SetData(frame.tostring())
+        img = wx.BitmapFromImage(wxImage)
+        img = self.scale_bitmap(img, 450, 300)  
+        sb1 = wx.StaticBitmap(self, -1,img, (455,25),(450, 300))
+        self.nb_dandruff_per_area = index
+        #print dandruffindex
+        #self.rfgs.Add(wx.StaticText(self, label=dandruffindex,pos=(100,440)),0, wx.ALIGN_CENTER_VERTICAL)
+        
+        wx.MessageBox("The dandruff index is estimated to be %f" % (index),style=wx.CENTER|wx.OK)
+        self.Layout()
+        self.Refresh(True)
+    
+    def OnCapture(self,event):
+        if self.previewon is True:
+            self.c.closepyg()
+            self.previewon = False
+        else:
+            self.OnPreviewForceStart()
+        self.cam = cv.CaptureFromCAM(0)    
+        self.c.capture_image()
+        img = wx.Image("hairpic.bmp", wx.BITMAP_TYPE_ANY)
+        img = wx.BitmapFromImage(img)
+        img = self.scale_bitmap(img, 450, 300)
+        sb2=wx.StaticBitmap(self, -1,img, (455,25),(450, 300))
+        self.filename = "hairpic.bmp"        
+        self.Layout()
+        self.Refresh(True)
+
+    def OnPreviewStart(self,event): 
+        self.previewon = True
+        self.c=camfunc.camera()
+        self.c.switchon_webcam()
+        self.c.get_image()
+        
+    def OnPreviewForceStart(self): 
+        self.previewon = True
+        self.c=camfunc.camera()
+        self.c.switchon_webcam()
+        self.c.get_image()
+
+    def OnPreviewEnd(self,event):
+        
+        self.previewon = False
+        self.c.closepyg()
+           
+    def OnCloseMe(self, event):
+        self.Close(True)
+        
+    def ReportGenerate(self, event):
+        import ScalpReport
+        #ScalpReport.generate_report(c, thickness, roots, dandruff)
+
+        
+    def DoOperation(self, event):  
+        
+        fd = wx.FileDialog(self,"Open Scalp Sample","./images","*.bmp","BMP files(*.bmp)|*.bmp", wx.OPEN)
+        if fd.ShowModal() == wx.ID_OK:
+            file = fd.GetPath()
+            img = wx.Image(file,wx.BITMAP_TYPE_BMP).ConvertToBitmap()
+            img = self.scale_bitmap(img, 450, 300)
+            sb2=wx.StaticBitmap(self, -1,img, (450,0),(450, 300))
+            self.Layout()
+            self.Refresh(True)
+       
+    def __init__(self, parent, id, title):
+        
+        self.nb_thickness_in_mm = 0
+        self.nb_rootdensity = 0
+        self.nb_dandruff_per_area = 0
+        
+        self.filename="dand5.bmp"
+        wx.Frame.__init__(self, parent, id, title, size=(1200, 1200))
+        self.previewon = False
+        
+        img =wx.Image("dand5.bmp",wx.BITMAP_TYPE_BMP).ConvertToBitmap()
+        img1=self.scale_bitmap(img, 450, 300)
+        
+        self.bw1 = BlockWindow(self, image=img1,pos=(0,20))
+        
+        img =wx.Image("dand6.bmp",wx.BITMAP_TYPE_BMP).ConvertToBitmap()
+        img2=self.scale_bitmap(img, 450, 300)
+        
+        self.bw2 = BlockWindow(self, image=img2,pos=(0,20))
+        
+        nb = wx.Notebook(self, -1, style=wx.NB_TOP)
+          
+        #instance0 = Panel0 ( nb ,self.nb_thickness_in_mm ,self.nb_rootdensity,self.nb_dandruff_per_area)
+        instance0 = Panel0 ( nb )
+        instance1 = Panel1 ( nb )
+        instance2 = Panel2 ( nb )
+        instance3 = Panel3 ( nb )
+        
+        #Bind(wx.EVT_BUTTON, self.thick_estimate, instance0.thickn_button)
+        
+        nb.AddPage ( instance0, 'All Scalp Analysis' )
+        nb.AddPage ( instance1, 'Thickness' )
+        nb.AddPage ( instance2, 'Root Density' )
+        nb.AddPage ( instance3, 'Dandruff' )
+        
+        sizer = wx.FlexGridSizer(rows=4, cols=1, hgap=5, vgap=5)
+        
+        self.preview_start_button = wx.Button(self, -1,"Preview On")
+        self.preview_end_button = wx.Button(self, -1,"Preview Off")
+        self.cap_button = wx.Button(self, -1,"Capture")
+        self.open_button = wx.Button(self, -1,"Open")
+        self.thickn_button = wx.Button(self, -1,"Estimate Thickness")
+        self.density_button = wx.Button(self, -1,"Root Density")
+        self.dandruff_button = wx.Button(self, -1,"Dandruff")
+        
+        self.imagesdisp_sizer = wx.FlexGridSizer(rows=1, cols=2, hgap=5, vgap=5)
+        
+        self.topbuttons_sizer = wx.FlexGridSizer(rows=1, cols=4, hgap=5, vgap=5)
+        
+        self.bottombuttons_sizer = wx.FlexGridSizer(rows=1, cols=3, hgap=5, vgap=5)
+        
+        self.notebook_sizer = wx.FlexGridSizer(rows=1, cols=1, hgap=5, vgap=5)
+        
+        self.topbuttons_sizer.Add(self.preview_start_button)
+        self.topbuttons_sizer.Add(self.preview_end_button)
+        self.topbuttons_sizer.Add(self.cap_button)
+        self.topbuttons_sizer.Add(self.open_button)
+        
+        self.bottombuttons_sizer.Add(self.thickn_button)
+        self.bottombuttons_sizer.Add(self.density_button) 
+        self.bottombuttons_sizer.Add(self.dandruff_button) 
+        
+        self.imagesdisp_sizer.Add(self.bw1)
+        self.imagesdisp_sizer.Add(self.bw2)
+        
+        self.notebook_sizer.Add(nb, 2)
+        
+        sizer.Add(self.topbuttons_sizer)
+        sizer.Add(self.imagesdisp_sizer)
+        sizer.Add(self.bottombuttons_sizer)
+        sizer.Add(self.notebook_sizer)
+        
+        
+        self.SetSizerAndFit(sizer)
+        self.statusbar = self.CreateStatusBar()
+        self.statusbar.SetFieldsCount(3)
+        self.statusbar.SetStatusWidths([-3, -4, -2])
+        self.statusbar.SetStatusText("wxPython", 0)
+        self.statusbar.SetStatusText("statusbar", 1)
+        
+        #creating  menu bar
+        
+        menuBar = wx.MenuBar()
+        
+        menu1 = wx.Menu()
+        menuItem1a = menu1.Append(-1, "&Open...")
+        menuItem1b = menu1.Append(-1, "&Exit...")
+        menuBar.Append(menu1, "&File")
+        
+        menu2 = wx.Menu()
+        menuItem2a = menu2.Append(-1, "&Generate Report..")
+        menuBar.Append(menu2, "&Tools")
+        
+        menu3 = wx.Menu()
+        menuItem3a = menu3.Append(-1, "&Help Contents...")
+        menuItem3b = menu3.Append(-1, "&About...")
+        menuBar.Append(menu3, "&Help")
+        
+        self.SetMenuBar(menuBar)
+        self.Bind(wx.EVT_MENU, self.OnOpenme, menuItem1a)
+        self.Bind(wx.EVT_MENU, self.OnCloseMe, menuItem1b)
+        self.Bind(wx.EVT_MENU, self.GenerateReport, menuItem2a)
+        
+        self.Bind(wx.EVT_BUTTON, self.OnCapture, self.cap_button)
+        self.Bind(wx.EVT_BUTTON, self.OnPreviewStart, self.preview_start_button)
+        self.Bind(wx.EVT_BUTTON, self.OnPreviewEnd, self.preview_end_button)
+        self.Bind(wx.EVT_BUTTON, self.OnOpenMe, self.open_button)
+        self.Bind(wx.EVT_BUTTON, self.thick_estimate, self.thickn_button)
+        self.Bind(wx.EVT_BUTTON, self.density_estimate, self.density_button)
+        self.Bind(wx.EVT_BUTTON, self.dandruff_estimate, self.dandruff_button)
+        
+        #self.bw1.Destroy()
+        self.bw2.Destroy()
+        
+
+class Panel0 ( wx.Panel ):
+
+    def scale_bitmap(self,bitmap, width, height):
+        image = wx.ImageFromBitmap(bitmap)
+        image = image.Scale(width, height, wx.IMAGE_QUALITY_HIGH)
+        result = wx.BitmapFromImage(image)
+        return result
+    
+    #def __init__ ( self, parent,t = 0,r = 0 ,d = 0 ):
+    def __init__ ( self, parent ):
+        wx.Panel.__init__ ( self, parent, -1 )
+
+        self.previewon = False
+
+        self.SetBackgroundColour(wx.Colour(192, 192, 192))
+        
+#        self.thickness = t
+#        self.roots = r
+#        self.dandruff = d
+        
+        self.slidervalue=0
+        
+        self.fgs = wx.FlexGridSizer(5,1,hgap=10,vgap=10)
+        
+        self.lfgs = wx.FlexGridSizer(rows=2, cols=1, hgap=5, vgap=5)
+        self.llfgs = wx.FlexGridSizer(rows=1, cols=2, hgap=5, vgap=5)
+        self.llfgs.Add(wx.StaticText(self, label="Scalp Specimen:"),0, wx.ALIGN_CENTER_HORIZONTAL)
+        self.llfgs.Add((0,0))
+               
+        self.lfgs.Add(self.llfgs)
+        
+
+        self.tfgs = wx.FlexGridSizer(rows=10, cols=1, hgap=5, vgap=5)
+
+        #self.rfgs.Add(self.basicText)
+        self.tfgs.Add(wx.StaticText(self, label="Results of the last Scalp Image:"),0, wx.ALIGN_CENTER_VERTICAL)
+        self.tfgs.Add((0,0))
+        self.tfgs.Add(wx.StaticText(self, label="Thickness:",pos=(915,115)),0, wx.ALIGN_CENTER_VERTICAL)
+        #self.tfgs.Add(wx.StaticText(self, label=str(self.thickness),pos=(915,115)),0, wx.ALIGN_CENTER_VERTICAL)
+        self.tfgs.Add(wx.StaticText(self, label="Root Density:",pos=(915,140)),0, wx.ALIGN_CENTER_VERTICAL)
+        #self.tfgs.Add(wx.StaticText(self, label=str(self.roots),pos=(915,115)),0, wx.ALIGN_CENTER_VERTICAL)
+        self.tfgs.Add(wx.StaticText(self, label="Index Of Dandruff:",pos=(920,174)),0, wx.ALIGN_CENTER_VERTICAL)
+        #self.tfgs.Add(wx.StaticText(self, label=str(self.dandruff),pos=(915,115)),0, wx.ALIGN_CENTER_VERTICAL)
+     
+        
+        self.fgs.Add(self.lfgs)
+        
+        self.fgs.Add(self.tfgs)
+        
+        
+        self.SetSizerAndFit(self.fgs)
+        self.Fit()
+        #self.bw2.Destroy()
+        
+    
+            
+    
+        
+class Panel1 ( wx.Panel ):
+
+    def OnSave(self,event):
+        scalpXmlDomEditor.changeThreshold("dandruff template match", self.slidervalue)
+        scalpXmlDomEditor.changeThreshold("dandruff template match", self.slidervalue)
+        scalpXmlDomEditor.changeThreshold("dandruff template match", self.slidervalue)
+        
+    def __init__ ( self, parent ):
+        wx.Panel.__init__ ( self, parent, -1 )
+        self.SetBackgroundColour(wx.Colour(192, 192, 192));
+        userinput_sizer = wx.FlexGridSizer(rows=3,cols=6)
+        
+        self.slider1 = wx.Slider(self, 100, 25, 1, 100,size=(250, -1),style=wx.SL_HORIZONTAL | wx.SL_LABELS )
+        self.slider2 = wx.Slider(self, 100, 25, 1, 100,size=(250, -1),style=wx.SL_HORIZONTAL | wx.SL_LABELS )
+        self.slider3 = wx.Slider(self, 100, 25, 1, 100,size=(250, -1),style=wx.SL_HORIZONTAL | wx.SL_LABELS )
+        userinput_sizer.Add(wx.StaticText(self, label="Thickness parameters",pos=(100,440)),0, wx.ALIGN_CENTER_VERTICAL)
+        userinput_sizer.Add((0,0))
+        userinput_sizer.Add((0,0))
+        userinput_sizer.Add((0,0))
+        userinput_sizer.Add((0,0))
+        userinput_sizer.Add((0,0))
+        userinput_sizer.Add(wx.StaticText(self, label="Min thickness threshold:",pos=(100,440)),0, wx.ALIGN_CENTER_VERTICAL)
+        userinput_sizer.Add(self.slider1)
+        userinput_sizer.Add(wx.StaticText(self, label="Max thickness threshold:",pos=(100,440)),0, wx.ALIGN_CENTER_VERTICAL)
+        userinput_sizer.Add(self.slider2)
+        userinput_sizer.Add(wx.StaticText(self, label="Area Threshold(noise avoidance):",pos=(100,440)),0, wx.ALIGN_CENTER_VERTICAL)
+        userinput_sizer.Add(self.slider3)
+        
+        self.reset_defaults = wx.Button(self, -1,"Save")
+        self.save_config = wx.Button(self, -1,"Reset")
+        userinput_sizer.Add(self.reset_defaults)
+        userinput_sizer.Add(self.save_config)
+
+        self.SetSizerAndFit(userinput_sizer)
+        self.Fit()
+        
+class Panel2 ( wx.Panel ):
+    
+    def sliderUpdate(self, event):
+        self.slidervalue = self.slider1.GetValue()
+        print self.slidervalue
+        self.Layout()
+        self.Refresh(True)
+        
+    def OnSave(self,event):
+        scalpXmlDomEditor.changeThreshold("dandruff template match", self.slidervalue)
+    
+    def __init__ ( self, parent ):
+        wx.Panel.__init__ ( self, parent, -1 )
+        self.SetBackgroundColour(wx.Colour(192, 192, 192));
+        userinput_sizer = wx.FlexGridSizer(rows=5,cols=2)
+        
+        self.slider1 = wx.Slider(self, 100, 25, 1, 100,size=(250, -1),style=wx.SL_HORIZONTAL | wx.SL_LABELS )
+        self.slider2 = wx.Slider(self, 100, 25, 1, 100,size=(250, -1),style=wx.SL_HORIZONTAL | wx.SL_LABELS )
+        self.slider3 = wx.Slider(self, 100, 25, 1, 100,size=(250, -1),style=wx.SL_HORIZONTAL | wx.SL_LABELS )
+        userinput_sizer.Add(wx.StaticText(self, label="Density Determination parameters",pos=(100,440)),0, wx.ALIGN_CENTER_VERTICAL)
+        userinput_sizer.Add((0,0))
+        userinput_sizer.Add(wx.StaticText(self, label="Size of template:",pos=(100,440)),0, wx.ALIGN_CENTER_VERTICAL)
+        userinput_sizer.Add(self.slider1)
+        userinput_sizer.Add(wx.StaticText(self, label="Max thickness threshold:",pos=(100,440)),0, wx.ALIGN_CENTER_VERTICAL)
+        userinput_sizer.Add(self.slider2)
+        userinput_sizer.Add(wx.StaticText(self, label="Area Threshold(noise avoidance):",pos=(100,440)),0, wx.ALIGN_CENTER_VERTICAL)
+        userinput_sizer.Add(self.slider3)
+        
+        self.reset_defaults = wx.Button(self, -1,"Save")
+        self.save_config = wx.Button(self, -1,"Reset")
+        userinput_sizer.Add(self.reset_defaults)
+        userinput_sizer.Add(self.save_config)
+
+        self.SetSizerAndFit(userinput_sizer)
+        self.Fit()
+        
+        
+
+class Panel3 ( wx.Panel ):
+    
+    def sliderUpdate(self, event):
+        self.slidervalue = self.slider1.GetValue()
+        print self.slidervalue
+        self.Layout()
+        self.Refresh(True)
+        
+    def OnSave(self,event):
+        scalpXmlDomEditor.changeThreshold("dandruff template match", self.slidervalue)
+             
+    def __init__ ( self, parent ):
+        wx.Panel.__init__ ( self, parent, -1 )
+        self.SetBackgroundColour(wx.Colour(192, 192, 192));
+        userinput_sizer = wx.FlexGridSizer(rows=5,cols=4)
+        
+        self.slider1 = wx.Slider(self, 100, 25, 1, 100,size=(250, -1),style=wx.SL_HORIZONTAL | wx.SL_LABELS )
+        
+        userinput_sizer.Add(wx.StaticText(self, label="Dandruff detection parameters",pos=(100,440)),0, wx.ALIGN_CENTER_VERTICAL)
+        userinput_sizer.Add((0,0))
+        userinput_sizer.Add((0,0))
+        userinput_sizer.Add((0,0))
+        userinput_sizer.Add((0,0))
+        userinput_sizer.Add(wx.StaticText(self, label="template match correlation index:",pos=(100,440)),0, wx.ALIGN_CENTER_VERTICAL)
+        userinput_sizer.Add(self.slider1)
+        userinput_sizer.Add((0,0))
+        userinput_sizer.Add((0,0))
+        
+        self.save_button = wx.Button(self, -1,"Save")
+        self.reset_button = wx.Button(self, -1,"Reset")
+        
+        userinput_sizer.Add(self.reset_button)
+        userinput_sizer.Add(self.save_button)
+        
+        self.Bind(wx.EVT_BUTTON, self.OnSave, self.save_button)
+        self.Bind(wx.EVT_SLIDER, self.sliderUpdate)
+        
+        self.SetSizerAndFit(userinput_sizer)
+        self.Fit()        
+            
+    
+class App(wx.App):
+    def OnInit(self):
+        self.frame = Notebook(None,-1,'Scalp Image Analyser 1.0')
+        self.frame.Show()
+        
+        self.SetTopWindow(self.frame)
+        return True
+
+if __name__ == '__main__':
+    
+    app = App()
+
+    app.MainLoop()
+               

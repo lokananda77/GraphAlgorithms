@@ -1,0 +1,9 @@
+All programs are written in python.
+
+`genaerate_players`:Generates a set of players with random skill set.Use this to test your program. The line number is the player ID. 
+Usage:
+    generate_player <number>
+`match`:gives the result of a match with respect to the first player.
+Run this excutable in your program to get the result of a match.The result will be written into a file named `result`.
+
+`rank_list`:Write your rank onto this file.The first line should have the player ID of the player ranked first, and so on. 
